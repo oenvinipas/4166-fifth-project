@@ -1,0 +1,51 @@
+  </head>
+  <body>
+    <!-- nav bar -->
+    <header>
+      <nav>
+        <a href="/" id="logo"
+          ><img src="/images/blackUnccLogo.png" alt="uncc logo"
+        ></a>
+        <ul class="hamburger-nav-bar">
+          <input type="checkbox" id="check" >
+          <span class="menu">
+            <li><a href="/events">Events</a></li>
+            <li><a href="/events/new">New Event</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <% if (!user) { %>
+              <li><a href="/users/login">Log in</a></li>
+              <li><a href="/users/new">Sign up</a></li>
+            <% } else { %>
+              <li><a href="/users/profile">Profile</a></li>
+              <li><a href="/users/logout">Logout</a></li>
+            <% } %>
+            <label for="check" class="close-menu"
+              ><i class="fa-solid fa-xmark white-icon"></i
+            ></label>
+          </span>
+          <label for="check" class="open-menu"
+            ><i class="fa-solid fa-bars white-icon"></i
+          ></label>
+        </ul>
+      </nav>
+    </header>
+
+    <% if (errorMessages.length > 0 || successMessages.length > 0) { %>
+      <div class="flash-messages">
+        <% if (errorMessages.length > 0) { %>
+          <% errorMessages.forEach(message => { %>
+            <div class="error">
+              <%= message %>
+            </div>
+          <% }) %>
+        <% } %>
+        <% if (successMessages.length > 0) { %>
+          <% successMessages.forEach(message => { %>
+            <div class="success">
+              <%= message %>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+    <% } %>

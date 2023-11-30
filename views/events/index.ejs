@@ -1,0 +1,40 @@
+<%- include('./../partials/beginHeader.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/styles/events.css" >
+    <title>49erHangout - Events</title>
+<%- include('./../partials/endHeader.ejs') %>
+
+<main>
+    <% if (categoryEvents.length) { %>
+        <section class="category">
+            <% categoryEvents.forEach(event => { %>
+                <h2><%= event.title %></h2>
+                <% event.events.forEach(singleEvent => { %>
+                        <div class="event">
+                            <div class="image">
+                                <img src=<%= typeof singleEvent.image !== 'undefined' ? singleEvent.image : "/images/fillerImage.jpg" %> alt="filler image" >
+                            </div>
+                            <div class="info">
+                                <div class="info-header">
+                                    <div class="info-header-h3">
+                                        <a href="/events/<%= singleEvent._id %>">
+                                        <h3><%= singleEvent.title %> <i class="fa-solid fa-up-right-from-square dark-icon"></i></h3>
+                                        </a>
+                                    </div>
+                                    <div class="info-header-date">
+                                        <p><%= singleEvent.startDate %> - <%= singleEvent.endDate %></p>
+                                    </div>
+                                </div>
+                                <div class="info-description">
+                                    <p><%= singleEvent.details %></p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% }) %>
+            </section>
+            <% } else { %>
+                <p>No events to display.</p>
+            <% } %>
+</main>
+
+<%- include('./../partials/footer.ejs') %>

@@ -1,0 +1,72 @@
+<%- include('./../partials/beginHeader.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/styles/newEvent.css" >
+    <title>49erHangout - Events</title>
+<%- include('./../partials/endHeader.ejs') %>
+
+  <main>
+      <section class="starting" id="new-event">
+        <div class="starting-div">
+          <h1>New Event</h1>
+        </div>
+      </section>
+      <section id="form-section">
+        <div class="form-container">
+          <form action="/events" method="POST" enctype="multipart/form-data">
+            <div class="label-input-container">
+              <label for="category">Category <span class="required">*</span></label>
+              <select name="category" id="category" required>
+                <option selected hidden disabled value="">
+                  Select a category
+                </option>
+                <option value="Athletics">Athletics</option>
+                <option value="Academic">Academic</option>
+                <option value="Career">Career</option>
+                <option value="Creative">Creative</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="label-input-container">
+              <label for="title">Title <span class="required">*</span></label>
+              <input type="text" id="title" name="title" placeholder="Title" required >
+            </div>
+
+            <div class="label-input-container">
+              <label for="details">Details <span class="required">*</span></label>
+              <textarea
+                name="details"
+                id="details"
+                placeholder="Details"
+                rows="6"
+                required
+                minlength="10"
+              ></textarea>
+            </div>
+
+            <div class="label-input-container">
+              <label for="location">Where <span class="required">*</span></label>
+              <input type="text" id="location" name="location" placeholder="Location" required >
+            </div>
+
+            <div class="label-input-container">
+              <label for="startDate">Start <span class="required">*</span></label>
+              <input type="datetime-local" id="startDate" name="startDate" required >
+            </div>
+
+            <div class="label-input-container">
+              <label for="endDate">End <span class="required">*</span></label>
+              <input type="datetime-local" id="endDate" name="endDate" required >
+            </div>
+
+            <div class="label-input-container">
+              <label for="image">Image <span class="required">*</span></label>
+              <input type="file" id="image" name="image" required >
+            </div>
+
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </section>
+  </main>
+
+<%- include('./../partials/footer.ejs') %>

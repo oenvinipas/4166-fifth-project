@@ -1,0 +1,66 @@
+#new-event {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("../images/unccUnion.jpg");
+}
+
+.starting-div {
+  height: inherit;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.starting-div h1 {
+  font-size: 4rem;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.form-container {
+  height: inherit;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80vw;
+  margin: 0 auto;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+textarea {
+  resize: vertical;
+  padding: 0.5rem;
+}
+
+input:not([type="file"]),
+select,
+button[type="submit"] {
+  padding: 0.5rem;
+}
+
+button[type="submit"] {
+  background-color: transparent;
+  color: var(--ore-black);
+  border: 2px solid var(--charlotte-green);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--charlotte-green);
+  color: var(--quartz-white);
+}
+
+.label-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.required {
+  color: var(--clay-red);
+}

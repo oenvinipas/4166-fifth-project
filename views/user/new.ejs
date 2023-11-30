@@ -1,0 +1,25 @@
+<%- include('../partials/beginHeader.ejs') %>
+<link rel="stylesheet" href="/styles/login-new.css" />
+<title>49ersHangout - Sign Up</title>
+<%- include('../partials/endHeader.ejs') %>
+
+<div id="form-container">
+    <h1>Sign Up</h1>
+    <form action="/users" method="POST">
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" id="firstName" required minlength="1" />
+
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName" id="lastName" required minlength="1" />
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required />
+
+        <label for="password">Password (at least 5 characters)</label>
+        <input type="password" name="password" id="password" required minlength="5" />
+
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+<%- include('../partials/footer.ejs') %>

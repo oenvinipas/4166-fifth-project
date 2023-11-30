@@ -1,0 +1,56 @@
+#form-container {
+    height: 80vh;
+    background-image: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.4)),
+        url("https://images.pexels.com/photos/16714964/pexels-photo-16714964/free-photo-of-a-view-of-the-skyline-of-charlotte-nc-at-sunset.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#form-container h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--quartz-white);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    color: var(--quartz-white);
+    width: 50%;
+}
+
+form>input {
+    font-size: 1rem;
+    padding: .5rem .4rem;
+    margin-bottom: 2rem;
+}
+
+form>input[type="submit"] {
+    color: var(--quartz-white);
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1.5px solid var(--quartz-white);
+    background-color: var(--ore-black);
+    border-radius: 5px;
+    padding: 1rem 1.5rem;
+    transition: 0.2s all ease-in-out;
+    cursor: pointer;
+}
+
+form>input[type="submit"]:hover {
+    background-color: var(--ore-black);
+    border-color: var(--niner-gold);
+    color: var(--niner-gold);
+}
+
+form>label {
+    font-size: 1.1rem;
+    margin-bottom: .3rem;
+}

@@ -1,0 +1,41 @@
+<%- include('./partials/beginHeader.ejs') %>
+<link rel="stylesheet" type="text/css" href="/styles/index.css" />
+<title>49erHangout - Home</title>
+<%- include('./partials/endHeader.ejs') %>
+
+<main>
+  <section id="hero">
+    <div class="hero-div">
+      <h1>Start a new adventure!</h1>
+      <p>
+        Welcome to 49ersHangout, a place where you can start or join an
+        adventure.
+      </p>
+      <a href="/events/new" class="gold-anchor">New Event</a>
+    </div>
+  </section>
+
+  <section class="events">
+    <h2>Looking for an Event...?</h2>
+    <div class="events-container">
+      <% if (events.length < 1) { %>
+        <p id="no-events">No Events Posted at the Moment...</p>
+      <% } else { %>
+          <% let i = 0 %>
+          <% while (i < 4 && events[i] !== undefined) { %>
+            <div class="event">
+              <h3><%= events[i].title %></h3>
+              <p>
+                <%= events[i].details %>
+              </p>
+              <a href="/events/<%= events[i]._id %>" class="event-anchor">More Info</a>
+            </div>
+            <% i++ %>
+          <% } %>
+      <% } %>
+    </div>
+    <a href="/events" class="gold-anchor stretched">See All Events</a>
+  </section>
+</main>
+
+<%- include('./partials/footer.ejs') %>

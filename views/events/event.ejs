@@ -1,0 +1,61 @@
+<%- include('./../partials/beginHeader.ejs') %>
+<link rel="stylesheet" type="text/css" href="/styles/event.css" />
+<title>49erHangout - Event</title>
+<%- include('./../partials/endHeader.ejs') %>
+
+<main>
+  <h1><%= event.category %></h1>
+  <section class="category">
+    <div class="event">
+      <div class="image">
+        <img
+          src="<%= typeof event.image !== 'undefined' ? event.image : '/images/fillerImage.jpg' %>"
+          alt="event image"
+        />
+      </div>
+      <div class="info">
+        <div class="info-header">
+          <div class="info-header-h3">
+            <h3 class="info-header-children"><%= event.title %></h3>
+            <h4 class="info-header-children">
+              Host: <%= event.host.firstName %> <%= event.host.lastName%>
+            </h4>
+            <small class="date-location info-header-children"
+              >Date: <%= event.startDate %> - <%= event.endDate %></small
+            >
+            <small
+              id="more-space-under"
+              class="date-location info-header-children"
+              >Location: <%= event.location %></small
+            >
+          </div>
+          <% if (user == event.host._id) { %>
+            <div class="info-header-options">
+              <form>
+                <button
+                  type="submit"
+                  formmethod="GET"
+                  formaction="/events/<%= event._id %>/edit"
+                >
+                  <i class="fa-solid fa-pen-to-square green-icon"></i>
+                </button>
+                <button
+                  type="submit"
+                  formmethod="POST"
+                  formaction="/events/<%= event._id %>?_method=DELETE"
+                >
+                  <i class="fa-solid fa-trash-can red-icon"></i>
+                </button>
+              </form>
+            </div>
+          <% } %>
+        </div>
+        <div class="info-description">
+          <p><%= event.details %></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('./../partials/footer.ejs') %>
