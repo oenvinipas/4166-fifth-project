@@ -5,11 +5,11 @@
 <main>
     <h2>How's it going, <%= user.firstName %> <%= user.lastName%>?</h2>
     <% if (events.length > 0) { %>
-        <section class="display-events">
+        <section class="display-events-rsvps">
             <h3>Your Events:</h3>
-            <div class="events">
+            <div class="events-rsvp">
                 <% events.forEach(event => { %>
-                    <div class="event">
+                    <div class="event-rsvp">
                         <a href="/events/<%= event.id %>"><p><%= event.title %></p></a>
                         <div class="buttons">
                             <form>
@@ -21,10 +21,26 @@
                     <% }) %>
             </div>
             </section>
-            <% } else { %>
-                <p id="no-event-p">No events to display.</p>
-            <% } %>
-    </div>
+    <% } else { %>
+        <p id="no-event-p">No events to display.</p>
+    <% } %>
+
+    <% if (rsvps.length > 0) { %>
+        <section class="display-events-rsvps">
+            <h3>Your RSVPs:</h3>
+            <div class="events-rsvps">
+                <% rsvps.forEach(rsvp => { %>
+                    <div class="event-rsvp">
+                        <a href="/events/<%= rsvp.eventId.id %>"><p><%= rsvp.eventId.title %></p></a>
+                        <p class="rsvp-status"><%= rsvp.status %></p>
+                    </div>
+                    <% }) %>
+            </div>
+            </section>
+    <% } else { %>
+        <p id="no-event-p">No RSVPs to display.</p>
+    <% } %>
+
 </main>
 
 <%- include('../partials/footer.ejs') %>

@@ -15,7 +15,7 @@
                 <div class="label-input-container">
                 <label for="category">Category <span class="required">*</span></label>
                 <select name="category" id="category" required>
-                    <option selected hidden disabled value="<= event.category %>">
+                    <option selected hidden value="<%= event.category %>">
                         <%= event.category %>
                     </option>
                     <option value="Athletics">Athletics</option>
@@ -43,7 +43,7 @@
 
                 <div class="label-input-container">
                 <label for="where">Where <span class="required">*</span></label>
-                <input type="text" id="where" name="where" placeholder="location" value="<%= event.location %>" required >
+                <input type="text" id="location" name="location" placeholder="location" value="<%= event.location %>" required >
                 </div>
 
                 <div class="label-input-container">

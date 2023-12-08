@@ -16,7 +16,7 @@ main h2 {
     text-align: center;
 }
 
-.display-events {
+.display-events-rsvps {
     height: inherit;
     display: flex;
     flex-direction: column;
@@ -24,11 +24,11 @@ main h2 {
     justify-content: center;
 }
 
-.display-events h3 {
+.display-events-rsvps h3 {
     text-decoration: underline;
 }
 
-.events {
+.events-rsvps {
     height: 50%;
     display: flex;
     flex-direction: column;
@@ -36,21 +36,28 @@ main h2 {
     border-radius: .5rem;
 }
 
-.event {
+.event-rsvp {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 2rem;
     margin: 0 1rem;
 }
 
-.event p {
+.event-rsvp p {
     width: 25ch;
 }
 
-.event a {
+.event-rsvp a {
     font-size: 1.3rem;
     text-decoration: underline;
     color: var(--charlotte-green);
+}
+
+.rsvp-status {
+    font-size: 1.3rem;
+    text-decoration: underline;
+    text-align: right;
 }
 
 .buttons form button {

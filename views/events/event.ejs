@@ -29,7 +29,7 @@
               >Location: <%= event.location %></small
             >
           </div>
-          <% if (user == event.host._id) { %>
+          <% if (user._id == event.host._id) { %>
             <div class="info-header-options">
               <form>
                 <button
@@ -53,9 +53,22 @@
         <div class="info-description">
           <p><%= event.details %></p>
         </div>
+        <div class="num-rsvps-div">
+          <p>Number of RSVPs: <span><b><%= numOfReservations %></b></span></p>
+        </div>
+        <% if (user && event.host._id != user._id) { %>
+          <div class="rsvp-button-div">
+            <h3>RSVP?</h3>
+            <form action="/events/<%= event._id %>/rsvp" method="POST">
+              <button id="green" class="rsvp-button" type="submit" name="status" value="YES">Yes</button>
+              <button id="red" class="rsvp-button" type="submit" name="status" value="NO">No</button>
+              <button id="gold" class="rsvp-button" type="submit" name="status" value="MAYBE">Maybe</button>
+            </form>
+          </div>
+        <% } %>
       </div>
-    </div>
   </section>
+  </div>
 </main>
 
 <%- include('./../partials/footer.ejs') %>

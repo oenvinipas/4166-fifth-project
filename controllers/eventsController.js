@@ -1,4 +1,5 @@
 const model = require("../models/eventsModel");
+const rsvpModel = require("../models/rsvp");
 const { DateTime } = require("luxon");
 
 exports.index = async (req, res, next) => {
@@ -26,6 +27,8 @@ exports.postEvent = (req, res, next) => {
   let event = new model(req.body);
   event.host = req.session.user;
 
+  console.log(event.host._id)
+
   let image = "/images/";
   if (!req.file) {
     event.image = "/images/fillerImage.jpg"
@@ -39,7 +42,6 @@ exports.postEvent = (req, res, next) => {
     })
     .catch(err => {
       if (err.name === "ValidationError") {
-        // err.status = 400;
         req.flash("error", "Validation error");
         res.redirect('back')
       }
@@ -47,30 +49,57 @@ exports.postEvent = (req, res, next) => {
     })
 };
 
-exports.getEventById = (req, res, next) => {
-  let id = req.params.id;
+exports.handleRSVP = async (req, res, next) => {
+  const eventId = req.params.id
+  const userId = req.session.user
+  const { status } = req.body;
 
-  model.findById(id)
-    .lean()
-    .populate("host", "firstName lastName")
-    .then(event => {
-      if (event) {
-        event.startDate = DateTime.fromJSDate(event.startDate).toLocaleString(
-          DateTime.DATETIME_MED
-        );
-        event.endDate = DateTime.fromJSDate(event.endDate).toLocaleString(
-          DateTime.DATETIME_MED
-          );
-        res.render("./events/event", { event });
-      } else {
-        let err = new Error("Invalid event id");
-        err.status = 404;
-        return next(err);
-      }
-    })
-    .catch(err => {
-      next(err)
-    })
+  try {
+    await rsvpModel.findOneAndUpdate(
+      { eventId, userId },
+      { status },
+      { upsert: true, new: true }
+    );
+
+    req.flash("success", "RSVP saved successfully")
+    res.redirect('/users/profile')
+
+  } catch (err) {
+    next(err);
+  }
+  
+};
+
+exports.getEventById = async (req, res, next) => {
+  try {
+    let eventId = req.params.id;
+
+    const event = await model.findById(eventId)
+      .lean()
+      .populate("host", "firstName lastName");
+
+    if (event) {
+      event.startDate = DateTime.fromJSDate(event.startDate).toLocaleString(
+        DateTime.DATETIME_MED
+      );
+      event.endDate = DateTime.fromJSDate(event.endDate).toLocaleString(
+        DateTime.DATETIME_MED
+      );
+
+      let numOfReservations = await rsvpModel.countDocuments({
+        eventId,
+        status: "YES",
+      });
+
+      res.render("./events/event", { event, numOfReservations });
+    } else {
+      let err = new Error("Invalid event id");
+      err.status = 404;
+      return next(err);
+    }
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.editEvent = (req, res, next) => {
@@ -108,11 +137,12 @@ exports.updateEvent = (req, res, next) => {
         let err = new Error("Cannot find image file");
         error.message = err
         error.status = 404;
+        console.log(event);
         next(error);
       });
   }
 
-  model.findByIdAndUpdate(id, event, {useFindAndModify: false, runValidators: true})
+  model.findByIdAndUpdate(id, event, { useFindAndModify: false, runValidators: true })
     .then(event => {
       if (event) {
         res.redirect("/events/" + id);
@@ -128,11 +158,16 @@ exports.updateEvent = (req, res, next) => {
 
 exports.deleteEvent = (req, res, next) => {
   let id = req.params.id;
+  console.log(id)
   
   model.findByIdAndDelete(id, {useFindAndModify: false})
     .then(event => {
       if (event) {
-        res.redirect("/events");
+          rsvpModel.deleteMany({ eventId: id }, { useFindAndModify: false })
+            .then(() => {
+              res.redirect("/events");
+            })
+            .catch(err => next(err))
       }
     })
     .catch(err => {
