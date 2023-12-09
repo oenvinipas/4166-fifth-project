@@ -8,6 +8,7 @@
         <section class="category">
             <% categoryEvents.forEach(event => { %>
                 <h2><%= event.title %></h2>
+                <% console.log("coming from index.ejs", event.events[0]._id) %>
                 <% event.events.forEach(singleEvent => { %>
                         <div class="event">
                             <div class="image">

@@ -27,8 +27,6 @@ exports.postEvent = (req, res, next) => {
   let event = new model(req.body);
   event.host = req.session.user;
 
-  console.log(event.host._id)
-
   let image = "/images/";
   if (!req.file) {
     event.image = "/images/fillerImage.jpg"
@@ -38,6 +36,7 @@ exports.postEvent = (req, res, next) => {
 
   event.save()
     .then((event) => {
+      req.flash("success", "Event created successfully")
       res.redirect("/events");
     })
     .catch(err => {
@@ -73,6 +72,7 @@ exports.handleRSVP = async (req, res, next) => {
 exports.getEventById = async (req, res, next) => {
   try {
     let eventId = req.params.id;
+    console.log("coming from eventController.js", eventId);
 
     const event = await model.findById(eventId)
       .lean()
@@ -93,7 +93,7 @@ exports.getEventById = async (req, res, next) => {
 
       res.render("./events/event", { event, numOfReservations });
     } else {
-      let err = new Error("Invalid event id");
+      let err = new Error("Cannot find a story with id" + eventId);
       err.status = 404;
       return next(err);
     }
@@ -137,9 +137,10 @@ exports.updateEvent = (req, res, next) => {
         let err = new Error("Cannot find image file");
         error.message = err
         error.status = 404;
-        console.log(event);
         next(error);
       });
+
+      req.flash("success", "Successfully edited event")
   }
 
   model.findByIdAndUpdate(id, event, { useFindAndModify: false, runValidators: true })
@@ -158,7 +159,6 @@ exports.updateEvent = (req, res, next) => {
 
 exports.deleteEvent = (req, res, next) => {
   let id = req.params.id;
-  console.log(id)
   
   model.findByIdAndDelete(id, {useFindAndModify: false})
     .then(event => {
@@ -176,5 +176,6 @@ exports.deleteEvent = (req, res, next) => {
       }
       next(err)
     })
-  
+    
+    req.flash("success", "Successfully deleted event")
 };

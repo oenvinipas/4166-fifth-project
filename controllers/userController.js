@@ -10,7 +10,10 @@ exports.createUser = (req, res, next) => {
     let user = new User(req.body)
     if (user.email) user.email = user.email.toLowerCase()
     user.save()
-        .then(user => res.redirect('/users/login'))
+        .then(user => {
+            req.flash("success", "User created successfully")
+            res.redirect('/users/login')
+        })
         .catch(err => {
             if (err.name === "ValidationError") {
                 req.flash('error', err.message);

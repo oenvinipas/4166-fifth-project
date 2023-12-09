@@ -72,7 +72,6 @@ app.use((req, res, next) => {
 
 //this error handler handles server errors
 app.use((err, req, res, next) => {
-  console.log(err.stack)
   if (!err.status) {
     err.status = 500;
     err.message = "Internal Server Error";
